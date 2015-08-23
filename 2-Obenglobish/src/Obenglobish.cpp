@@ -55,7 +55,9 @@ bool isVowel(char letter){
 //}
 
 /***Implementing functions using recursion***/
-
+//Each subsequent recursive call function divides
+//the string that the user enters and performs
+//actions with each individual Elements line.
 string obenglobish(string wordLine){
     string str;
     string word = toLowerCase(wordLine);

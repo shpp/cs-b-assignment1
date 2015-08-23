@@ -23,21 +23,6 @@ int main() {
 }
 
 
-
-//int stringToInt(string str){
-//    int result=0;
-//    int rankCounter=1;
-
-//    //get int from string
-//    for (int i = str.length()-1; i >= 0 ; i--){
-//        int temp = str[i]-'0'; //get current value from char
-//        result=result+rankCounter*temp;
-//        rankCounter *=10;
-//    }
-//    return result;
-//}
-
-
 int stringToInt(string str){
     if (str[0] == '-')
         return (-1)*stringToIntSubProg(str.substr(1, str.length() - 1));

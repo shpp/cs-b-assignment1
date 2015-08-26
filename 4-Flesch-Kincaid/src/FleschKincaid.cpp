@@ -32,6 +32,14 @@ void processingLine(string &, int &, int &, int &);
 void removeExtraSpaces(string &);
 
 /*
+ * Checks: is this a single-character punctuation.
+ * @param string takes a line where makes checking passed charecter
+ * and also next and previous charecters.
+ * @param int takes a possition of a checking character.
+ */
+bool isASingleCharacterPunctuation(string &, int);
+
+/*
  * Checks whether there is a vowel before the letter.
  * @param string takes the line where cheks belonging vowel to one syllable.
  * @param int takes a possition of the letter in the line which is cheked.
@@ -94,6 +102,7 @@ double fleschKincaidGradeLevelTest(ifstream & readFile){
     if (numSentences < 1){
         numSentences = 1; // to avoid division by zero equate number of sentences to one
     }
+    cout << numSyllables << " -> " << numWords << " -> " << numSentences << endl;
     return C_0 + C_1*(((double)numWords)/numSentences) + C_2*(((double)numSyllables)/numWords);
 }
 
@@ -106,6 +115,9 @@ void processingLine(string &line, int &numWords, int &numSentences, int &numSyll
         if(isspace(line[i])){
             ++numWords;
             numSyllablesInWord = 0;
+        }
+        if (isASingleCharacterPunctuation(line, i)){
+             --numWords;
         }
         if(isSentences(line, i)){
             ++numSentences;
@@ -148,6 +160,11 @@ bool isVowel(char letter){
         }
     }
     return false;
+}
+
+
+bool isASingleCharacterPunctuation(string &line, int possition){
+    return ((ispunct(line[possition])) && (isspace(line[possition - 1])) && (isspace(line[possition + 1])));
 }
 
 

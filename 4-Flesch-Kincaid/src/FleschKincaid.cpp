@@ -65,13 +65,16 @@ int main() {
 
     TokenScanner scanner;
     scanner.setInput(fileIn);
-    scanner.ignoreWhitespace();
+    //scanner.ignoreWhitespace();
+    string ignoringChars;
+    ignoringChars= "\'";
+    scanner.addWordCharacters(ignoringChars);
 
     int numWords=0, numCentences=0, numSyllabels=0;
 
     while (scanner.hasMoreTokens()) {
        string token = scanner.nextToken();
-       cout << token << endl;
+       cout << token;
        if(!isalpha(token[0])==0){
            numWords++;
            numSyllabels+=countSyllables(token);
@@ -82,7 +85,7 @@ int main() {
 
     cout << "Syllables: " << numSyllabels << ", words: " << numWords << ", centences: " << numCentences << endl;
 
-    double c0=-15.9, c1=0.39, c2=11.8;
+    double c0=-15.59, c1=0.39, c2=11.8;
     double k1=double(numWords)/numCentences;
     double k2=double(numSyllabels)/numWords;
     double grade=c0+c1*k1+c2*k2;

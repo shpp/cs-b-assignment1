@@ -25,6 +25,8 @@ int main() {
     double words =0;      //count words
     double sentences = 0; //count sentences
     while (getline(infile,line)){
+        line = stringReplace(line, "\'","");
+               // cout<<"Replased line - "<< line<< endl;
         TokenScanner scanner(line);
         while (scanner.hasMoreTokens()) {
             scanner.ignoreWhitespace();               //we ignore whitespace - " ".
@@ -38,13 +40,8 @@ int main() {
     float testRes = (-15.59)+( (words/sentences)*0.39) + (11.8 * (syllsumary/words));
     cout<<"Number of words in text is - "<<words<<endl;
     cout<<"Number of sylables in text is - "<<syllsumary<<endl;
-
     cout<<"Number of sentences in text is - "<<sentences<<endl;
     cout<<"Total grade - "<<testRes<<" class."<<endl;
-
-
-
-
     return 0;
 }
 
@@ -78,7 +75,7 @@ bool vowelCheck(char i){
 
 bool commaCheck(string i){
     bool res;
-    string commaSigns = ",.!?1234567890 ";
+    string commaSigns = ",.!?1234567890-\'\" ";
     for(int j = 0; j < commaSigns.length();j++){
         if(i[0]==commaSigns[j]){
             res = true;
@@ -94,6 +91,7 @@ bool commaCheck(string i){
 int syllableCountHelp(string token){
     int res = 0 ;
     string word = toLowerCase(token);
+
     int wLen = word.length();
     char last = word[wLen-1];
     int cheking = 0;            //need to check if word ends on "e" letter
@@ -103,6 +101,9 @@ int syllableCountHelp(string token){
     }
     //start change entered word.
     //compare entered word with vowelletter char by char
+    if(vowelCheck(word[0])==true){
+        res++;
+    }
     for(int i = 0; i<word.length();i++){
         if(i!=0){
             if(vowelCheck(word[i])==true && vowelCheck(word[i-1])==false ){

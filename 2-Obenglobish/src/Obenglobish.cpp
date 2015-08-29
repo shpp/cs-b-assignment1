@@ -53,6 +53,7 @@ string obenglobish(string wordTmp){
      if(cheking==1){
          res+="e";
      }
+     //cout<<"res is res -"<<res<<endl;
      return res;
 }
 

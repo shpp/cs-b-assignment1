@@ -21,27 +21,25 @@ int main() {
     promptUserForFile(infile, "Enter filename: ");
     //infile.open("RosesAreRed.txt");
     string line;
-    double syllsumary =0; //count syllables
-    double words =0;      //count words
+    double syllsumary = 0; //count syllables
+    double words = 0;      //count words
     double sentences = 0; //count sentences
-    while (getline(infile,line)){
-        line = stringReplace(line, "\'","");
-               // cout<<"Replased line - "<< line<< endl;
+    while (getline(infile, line)){
+        line = stringReplace(line, "\'",""); //remove ' from string
         TokenScanner scanner(line);
         while (scanner.hasMoreTokens()) {
             scanner.ignoreWhitespace();               //we ignore whitespace - " ".
             string token = scanner.nextToken();
-            //cout<<line<<endl;
             syllsumary += syllableCount(token);
             words += wordCount(token);
-            sentences+=sentenceCount(token);
+            sentences += sentenceCount(token);
         }
     }
-    float testRes = (-15.59)+( (words/sentences)*0.39) + (11.8 * (syllsumary/words));
-    cout<<"Number of words in text is - "<<words<<endl;
-    cout<<"Number of sylables in text is - "<<syllsumary<<endl;
-    cout<<"Number of sentences in text is - "<<sentences<<endl;
-    cout<<"Total grade - "<<testRes<<" class."<<endl;
+    float testRes = (-15.59) + ( (words/sentences) * 0.39) + (11.8 * (syllsumary/words));
+    cout << "Number of words in text is - " << words << endl;
+    cout << "Number of sylables in text is - " << syllsumary << endl;
+    cout << "Number of sentences in text is - " << sentences << endl;
+    cout << "Total grade - " << testRes << " class." << endl;
     return 0;
 }
 
@@ -50,20 +48,20 @@ int syllableCount(string line){
     int numToken = 0;
     int e = 0;
     line = toLowerCase(line);
-    //check if string "token" not equals ",.!?"
+    //check if string "token" not equals ",.!?...."
     //if not equals then we can counr syllables
-    if(commaCheck(line)==false){
+    if(commaCheck(line) == false){
         numToken = syllableCountHelp(line);
-        countSyll+=numToken;
+        countSyll += numToken;
     }
     return countSyll;
 }
-
+//return true if letter is vowel
 bool vowelCheck(char i){
     bool res;
     string vowelLetter = "eaiouy";
-    for(int j = 0; j < vowelLetter.length();j++){
-        if(i==vowelLetter[j]){
+    for(int j = 0; j < vowelLetter.length(); j++){
+        if(i == vowelLetter[j]){
             res = true;
             break;
         }else{
@@ -72,12 +70,12 @@ bool vowelCheck(char i){
     }
     return res;
 }
-
+//retun true if i[0] = ",.!?1234567890-\'\" ". Check if it is word.
 bool commaCheck(string i){
     bool res;
     string commaSigns = ",.!?1234567890-\'\" ";
     for(int j = 0; j < commaSigns.length();j++){
-        if(i[0]==commaSigns[j]){
+        if(i[0] == commaSigns[j]){
             res = true;
             break;
         }else{
@@ -91,13 +89,12 @@ bool commaCheck(string i){
 int syllableCountHelp(string token){
     int res = 0 ;
     string word = toLowerCase(token);
-
     int wLen = word.length();
     char last = word[wLen-1];
     int cheking = 0;            //need to check if word ends on "e" letter
     //check if entered word end with "e", if true - set cheking = 1;
     if(last == char(101)){
-        cheking =1;
+        cheking = 1;
     }
     //start change entered word.
     //compare entered word with vowelletter char by char
@@ -114,18 +111,17 @@ int syllableCountHelp(string token){
     if(cheking == 1){
         res--;
     }
-    if(res<=0){
-        res=1;
+    if(res <= 0){
+        res = 1;
     }
-
-    cout<< word <<" - token has - "<<res<<" syllabels."<<endl; //to view result of counting
+    cout << word << " - token has - " << res << " syllabels." << endl; //to view result of counting
     return res;
-
 }
 
+//ask user to enter file name
 string promptUserForFile(ifstream & infile, string prompt ){
     while(true){
-        cout<< prompt;
+        cout << prompt;
         string filename;
         getline(cin, filename);
         infile.open(filename.c_str());
@@ -141,7 +137,7 @@ string promptUserForFile(ifstream & infile, string prompt ){
 int wordCount(string line){
     int res = 0;
     line = toLowerCase(line);
-    if(wordCheck(line)==true){
+    if(wordCheck(line) == true){
         res++;
     }
     return res;
@@ -150,10 +146,8 @@ int wordCount(string line){
 int sentenceCount(string line){
     int res = 0;
     line = toLowerCase(line);
-    if(sentenceCheck(line)==true){
+    if(sentenceCheck(line) == true){
         res++;
-        //               cout<<"word token is - "<< token << endl;
-        //               cout<< "res is  = "<< res<<endl;
     }
     return res;
 }
@@ -164,7 +158,7 @@ bool sentenceCheck(string i){
     char b = i[0];
     string alphabet = ".!?";
     for(int j = 0; j < alphabet.length();j++){
-        if(b==alphabet[j]){
+        if(b == alphabet[j]){
             res = true;
             break;
         }else{
@@ -179,7 +173,7 @@ bool wordCheck(string i){
     char b = i[0];
     string alphabet = "abcdefghijklmnopqrstuvwxyz";
     for(int j = 0; j < alphabet.length();j++){
-        if(b==alphabet[j]){
+        if(b == alphabet[j]){
             res = true;
             break;
         }else{

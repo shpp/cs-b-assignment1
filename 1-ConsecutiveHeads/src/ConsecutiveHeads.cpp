@@ -12,8 +12,8 @@ void throwCoin()
     while(b<3){
         int i = randomInteger(0,1);
         if(i == 1){
-             cout << "heads" << endl;
-             b += 1;
+            cout << "heads" << endl;
+            b += 1;
         }else{
             cout << "tails" << endl;
             b = 0;
@@ -26,5 +26,5 @@ int main() {
 
     throwCoin();
 
-   return 0;
+    return 0;
 }

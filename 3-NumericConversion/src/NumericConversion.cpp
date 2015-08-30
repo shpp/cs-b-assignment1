@@ -31,13 +31,11 @@ int stringToInt(string str){
         cout << "stroka posle - " << str << endl;
         minus = 1;
     }
-
     if(str.length() == 1){
         char a = str[0];
         int b =((int) a) - 48;
         return res = b;
     }
-
     res =(((int) str[str.length()-1]) - 48) + 10 * stringToInt(str = str.substr(0,str.length() - 1)) ;
     if(minus == 1){
         res = res * (-1);
@@ -55,11 +53,11 @@ string intToString(int n){
         n = n * (-1);
         //cout << "chislo posle - " << n << endl;
         minus = 1;
-}
+    }
    if(n < 10){
    return res = char(n + 48);
-}
-    res = (intToString(n / 10)+char((n % 10) + 48));           //48
+    }
+    res = (intToString(n / 10)+char((n % 10) + 48));           //48 = 0
     if(minus == 1){
         res =char(45) + res;
     }

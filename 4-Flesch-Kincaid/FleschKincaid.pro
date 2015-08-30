@@ -66,7 +66,8 @@ exists($$PWD/*.cpp) {
     SOURCES += $$PWD/*.cpp
 }
 
-HEADERS += $$PWD/lib/StanfordCPPLib/*.h
+HEADERS += $$PWD/lib/StanfordCPPLib/*.h \
+    src/b.h
 HEADERS += $$PWD/lib/StanfordCPPLib/private/*.h
 HEADERS += $$PWD/lib/StanfordCPPLib/stacktrace/*.h
 exists($$PWD/src/*.h) {
@@ -110,7 +111,7 @@ win32 {
     QMAKE_LFLAGS += -Wl,--stack,536870912
     LIBS += -lDbghelp
     LIBS += -lbfd
-    LIBS += -liberty
+#    LIBS += -liberty
     LIBS += -limagehlp
 }
 macx {

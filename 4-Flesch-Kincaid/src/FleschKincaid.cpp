@@ -8,21 +8,22 @@
 
 using namespace std;
 
-//Functions prototypes
+/* Functions prototypes */
 string fileInput(string line);
-void readFileProcess(istream & infile);
+void readFileProcess(istream & infile, string fileName);
 void scanCPlusPlusTokens(TokenScanner & scanner);
 bool isEndSentenceCharacter(string word);
 void simpleTokenProcess(string word, int & syllablesCounter,
-                                    int & wordsCounter,
-                                    int & sentencesCounter);
+                                     int & wordsCounter,
+                                     int & sentencesCounter);
 int syllablesCountProcess(int index, string word, int result);
 bool isVowel (char letter);
-//FleschKincaid equation constatnts
+const bool showDebug = false;
+/* FleschKincaid equation constatnts */
 const double C0 = -15.59;
 const double C1 = 0.39;
 const double C2 = 11.8;
-// Console settings
+/* Console settings */
 void consoleSettings();
 const double chance = 0.5;
 const string programTitle = "FleschKincaid";
@@ -31,64 +32,68 @@ const bool consoleEcho = false;
 int main() {
     /* Adjust concole settings for programm */
     consoleSettings();
-    /* User enters name of file */
-    //string fileName = fileInput("Enter file name: ");
-    string fileName = "US-Constitution.txt";
+    /* User enters name of file from project directory */
+    string fileName = fileInput("Enter file name: ");
+
     /* Prepare main input stream object   */
     ifstream infile;
     /* Lunch stream of file reading   */
     infile.open(fileName.c_str());
     /* Main program process */
-    readFileProcess(infile);
+    readFileProcess(infile, fileName);
     /* If whole file is read program closes stream */
     infile.close();
 
     return 0;
 }
 
-void readFileProcess(istream & infile){
+/* Makes file reading and shows results of process  */
+void readFileProcess(istream & infile, string fileName){
         if (infile.fail()){
+            /* Informs about problems at start of file reading */
             cout << "FAIL" << endl;
         }else{
+            /* Main process
+             * Scans input stream by  TokenScanner object  */
             TokenScanner scanner;
             scanner.setInput(infile);
+            /* Settings of scanner */
             scanCPlusPlusTokens(scanner);
-
+            /* Main results counters */
             int syllablesCnt = 0;
             int wordsCnt = 0;
             int sentencesCnt = 0;
-
+            /* Main process loop */
             while (scanner.hasMoreTokens()) {
+                /* Take next token from scanner */
                 string token = scanner.nextToken();
+                /* Main sorting and counters incrementing */
                 simpleTokenProcess(token, syllablesCnt, wordsCnt, sentencesCnt);
             }
-
+            /* End of file detection */
             if(infile.fail()){
                 if(infile.eof()){
-                    /* Case of empty file */
+                    /* Case of empty file have return some results */
                     if(sentencesCnt == 0){
                         sentencesCnt++;
                     }
                     if(wordsCnt == 0){
                         wordsCnt++;
                     }
-                    cout << "END OF FILE" << endl;
                 }
             }
-            cout << "====================================" << endl;
-            cout << "TOTAL SYLLABLES " << syllablesCnt << endl;
-            cout << "TOTAL WORDS " << wordsCnt << endl;
-            cout << "TOTAL SENTENCES " << sentencesCnt << endl;
-
+            /* Process results printing to user */
+            cout << "IN FILE: " << fileName << endl;
+            cout << "WORDS = " << wordsCnt << endl;
+            cout << "SYLLABLES = " << syllablesCnt << endl;
+            cout << "SENTENCES = " << sentencesCnt << endl;
+            /* Result equation */
             double result = 0;
             result += C0;
-            cout << result << endl;
-            result += (C1*(wordsCnt/sentencesCnt));
-            cout << (C1*(wordsCnt/sentencesCnt)) << endl;
-            result += (C2*(syllablesCnt/wordsCnt));
-            cout << (C2*(syllablesCnt/wordsCnt)) << endl;
-            cout << "RESULT = " << result;
-
+            result += (C1* wordsCnt/ sentencesCnt);
+            result += (C2* syllablesCnt / wordsCnt);
+            /* Result printing */
+            cout << "GRADE LEVEL = " << result;
     }
 }
 
@@ -147,16 +152,24 @@ void simpleTokenProcess(string token, int & syllablesCounter,
         int syllables = syllablesCountProcess(0, token, 0);
         syllablesCounter += syllables;
         wordsCounter++;
-        //cout << wordsCounter << " " << token << " = " << syllables << endl;
+        if(showDebug){
+            cout << wordsCounter << " " << token << " = " << syllables << endl;
+        }
     }
     else if ((token.length() > 1) && (token[0] == '\'') && (isalpha(token[1]))){
-        //cout <<  token << endl;
+        /* Case of quotes "'word" tokens counts as word */
+        if(showDebug){
+            cout <<  token << endl;
+        }
         int syllables = syllablesCountProcess(1, token, 0);
         syllablesCounter += syllables;
         wordsCounter++;
     }
     else if ((token.length() > 2) && (token[0] == '-') && (isalpha(token[2]))){
-        //cout <<  token << endl;
+        /* Case of "--ab" tokens counts as word */
+        if(showDebug){
+            cout <<  token << endl;
+        }
         int syllables = syllablesCountProcess(1, token, 0);
         syllablesCounter += syllables;
         wordsCounter++;
@@ -164,10 +177,17 @@ void simpleTokenProcess(string token, int & syllablesCounter,
     else if (isEndSentenceCharacter(token)){
         /* Sentences detection */
         sentencesCounter++;
-        //cout <<  token << " ---------- end symbol " << sentencesCounter << endl;
+        if(showDebug){
+            cout <<  token << " ---------- end symbol " << sentencesCounter << endl;
+        }
     }else{
         if(!(ispunct(token[0]))){
-            cout << token << " --------------------------- SOMETHING "  << endl;
+            if(showDebug){
+                cout << token << " --------------------------- SOMETHING "  << endl;
+            }
+            if(isdigit(token[0])){
+                wordsCounter++;
+            }
         }
     }
 }
@@ -192,8 +212,8 @@ void scanCPlusPlusTokens(TokenScanner & scanner) {
     scanner.ignoreWhitespace();
     /* To recognize words like "isn't" */
     scanner.addWordCharacters("'");
-    /* To recognize words like "two-way" */
-    scanner.addWordCharacters("-");
+    /* Don't recognize words like "two-way" */
+    //scanner.addWordCharacters("-");
     /* To recognize symbol "..." like end of sentence */
     scanner.addOperator("...");
 

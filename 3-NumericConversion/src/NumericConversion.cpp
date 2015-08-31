@@ -41,6 +41,7 @@ string intToString(int n) {
     return recoursiveFeedback;
 }
 
+//recursion make string as int
     int stringToInt(string str){
         bool minusFlag = false;
         int tempRez = 0;

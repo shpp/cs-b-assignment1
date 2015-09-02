@@ -26,12 +26,35 @@ bool isVowel(char letter){
         return true;
     else return false;
 }
-
+/*****Implementing functions using a loop****/
+//Function in a loop to iterate over all the
+//letters of the string and if it finds a vowel,
+//and in front of it is not worth another vowel confronts her line "ob".
+//string obenglobish(string wordLine){
+//    string str;
+//    string word = toLowerCase(wordLine);
+//    for(int i = 0;i<word.length();i++){
+//        if(word[i]=='e'){
+//            if((i != word.length()-1)&&(!isVowel(word[i-1]))){
+//                str = str+string("ob")+word[i];
+//            }
+//            else{
+//                str +=word[i];
+//            }
+//        }
+//        else{
+//            if(isVowel(word[i]) && !isVowel(word[i-1])){
+//                str = str+string("ob")+word[i];
+//            }
+//            else{
+//                str +=word[i];
+//            }
+//        }
+//    }
+//    return str;
+//}
 
 /***Implementing functions using recursion***/
-//Each subsequent recursive call function divides
-//the string that the user enters and performs
-//actions with each individual Elements line.
 string obenglobish(string wordLine){
     string str;
     string word = toLowerCase(wordLine);

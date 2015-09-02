@@ -22,18 +22,19 @@ Checks whether there is such a file.
 If there is the object -ifstream infile-(The object read from the stream file) creates the file and
 passes it to the function fleschKincaid */
 void settingFile(){
-    string s;
+    char str[255];
     cout<<"Enter input file name: ";
-    if(cin>>s){
-        ifstream infile(s,ios::in);
+    if(cin.getline(str, sizeof(str))){
+        ifstream infile(str,ios::in);
         if(infile.is_open()){
             fleschKincaid(infile);
+            infile.close();
           }
         else{
             cout<<"This file does not exist"<<endl;
             settingFile();
         }
-    }
+    }    
 }
 
 /*The function takes an object by reference,

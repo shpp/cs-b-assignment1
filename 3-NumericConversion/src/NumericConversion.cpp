@@ -62,6 +62,11 @@ int stringToInt(string str){
 
 string intToString(int number){
     string resultString;
+    /*
+     function intToString I brazenly copied from the Internet while
+     searching for the Board but thoroughly analyzed,
+     found www.cplusplus.com/forum/beginner/78550/
+    */
     static bool recursive_call = false; //is this a recursive call?
     if(!recursive_call) {
         if(!number) return "0"; //deal with zero

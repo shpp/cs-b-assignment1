@@ -98,11 +98,14 @@ unix:!macx {
     QMAKE_LFLAGS += -rdynamic
     QMAKE_LFLAGS += -Wl,--export-dynamic
     QMAKE_CXXFLAGS += -Wl,--export-dynamic
+
+    LIBS+=-L/usr/local/lib
+    LIBS+=-lexecinfo
 }
 !win32 {
     QMAKE_CXXFLAGS += -Wno-dangling-field
     QMAKE_CXXFLAGS += -Wno-unused-const-variable
-    LIBS += -ldl
+#    LIBS += -ldl
 }
 
 # increase system stack size (helpful for recursive programs)
